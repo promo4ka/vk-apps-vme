@@ -1,0 +1,30 @@
+.wrapper {
+    text-align: center;
+    color: #fff;
+    padding: 0 49px;
+    width: 200px;
+    margin: 0 auto;
+}
+.center {
+    text-align: center;
+}
+.heart {
+    animation: rotate 2s infinite ease-in-out;
+    font-size: 100px;
+    line-height: 1px;
+    color: red;
+}
+.mh1 {
+    position: relative;
+    top: 50px;
+    color: #333;
+}
+.mh2 {
+    position: relative;
+    top: 30px;
+    color: #333;
+}
+@keyframes rotate {
+    from {transform: rotate3d(0, 1, 0, 0deg);}
+    to {transform: rotate3d(0, 1, 0, 360deg);}
+}
