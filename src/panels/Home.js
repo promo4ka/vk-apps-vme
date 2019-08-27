@@ -5,20 +5,21 @@ import "./Home.css";
 
 const Home = ({ id, go, fetchedUser, stories, viewstories }) => (
 	<Panel id={id}>
-		<PanelHeader>{fetchedUser && fetchedUser.first_name}</PanelHeader>
+		{/* <PanelHeader theme="light"></PanelHeader> */}
 		<Div className="wrapper">
-			<h1 className="mh1">Спасибо за то,</h1>
-			<h2 className="mh2">что ты есть</h2>
+			<h1 className="mh1">{fetchedUser && fetchedUser.first_name},</h1>
+			<h2 className="mh2">спасибо за то,<br /> что ты есть!</h2>
 			<p className="heart">❤</p>
 		</Div>
 
 		<Div className="center">
-			<Button level="outline" onClick={go} size="l">Отправить дальше</Button>
+			<Button size="xl" level="commerce" onClick={go} size="l">Отправить дальше</Button>
 		</Div>
 
 		{viewstories && 
 		<Div className="mfooter center">
-			<Button level="tertiary" onClick={stories} size="l">Поддержать историей</Button>
+			<Div className="stories-text">Вы можете поддержать идею, опубликовав историю.</Div>
+			<Button level="secondary" onClick={stories} size="l">Поддержать историей</Button>
 		</Div>}
 	</Panel>
 );

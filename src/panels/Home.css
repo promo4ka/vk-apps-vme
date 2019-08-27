@@ -2,7 +2,8 @@
     text-align: center;
     color: #fff;
     padding: 0 49px;
-    width: 200px;
+    max-width: 300px;
+    width: 100%;
     margin: 0 auto;
 }
 .center {
@@ -18,17 +19,29 @@
     position: relative;
     top: 50px;
     color: #333;
+    font-size: 36px;
+    line-height: 30px;
 }
 .mh2 {
     position: relative;
     top: 30px;
     color: #333;
 }
+.stories-text {
+    font-size: 12px;
+    color: #757575;
+}
 .mfooter {
     position: fixed;
     bottom: 40px;
     width: 100%;
     left: -12px;
+}
+.PanelHeader--ios .PanelHeader-bg::after {
+    display: none;
+}
+.PanelHeader--android .PanelHeader-bg {
+    display: none;
 }
 @keyframes rotate {
     from {transform: rotate3d(0, 1, 0, 0deg);}

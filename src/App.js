@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View } from '@vkontakte/vkui';
+import { View, Alert } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import axios from 'axios';
 
@@ -13,7 +13,8 @@ class App extends React.Component {
 		this.state = {
 			activePanel: 'home',
 			fetchedUser: null,
-			viewstories: true
+			viewstories: true,
+			popout: null
 		};
 
 		this.stories = this.stories.bind(this);
@@ -30,6 +31,18 @@ class App extends React.Component {
 			}
 		});
 		connect.send('VKWebAppGetUserInfo', {});
+		connect.send("VKWebAppSetViewSettings", {"status_bar_style": "dark", "action_bar_color": "#fff"});
+	}
+
+	closePopout = () => {
+		this.setState({ popout: null });
+	}
+
+	savepopout = () => {
+		this.setState({ popout: <Alert onClose={this.closePopout}>
+			<h2 className='hi' style={{color:"black", margin:'0px'}}>Спасибо 😏</h2>
+		  </Alert> });
+		setTimeout(() => { this.setState({ popout: null }) }, 1500);
 	}
 
 	stories(e) {
@@ -61,9 +74,8 @@ class App extends React.Component {
 				});
 				
 				main.setState({ viewstories: false });
+				this.savepopout();
 
-            } else if (e.detail.handler === "VKWebAppGetAuthToken") {
-            } else if (e.detail.type === "VKWebAppAccessTokenFailed") {
             }
         });
     }
@@ -74,7 +86,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<View activePanel={this.state.activePanel}>
+			<View popout={this.state.popout} activePanel={this.state.activePanel}>
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} viewstories={this.state.viewstories} stories={this.stories} />
 			</View>
 		);
