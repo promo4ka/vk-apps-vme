@@ -24,6 +24,12 @@
     top: 30px;
     color: #333;
 }
+.mfooter {
+    position: fixed;
+    bottom: 40px;
+    width: 100%;
+    left: -12px;
+}
 @keyframes rotate {
     from {transform: rotate3d(0, 1, 0, 0deg);}
     to {transform: rotate3d(0, 1, 0, 360deg);}
