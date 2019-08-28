@@ -5,7 +5,6 @@ import "./Home.css";
 
 const Home = ({ id, go, fetchedUser, stories, viewstories }) => (
 	<Panel id={id}>
-		{/* <PanelHeader theme="light"></PanelHeader> */}
 		<Div className="wrapper">
 			<h1 className="mh1">{fetchedUser && fetchedUser.first_name},</h1>
 			<h2 className="mh2">спасибо за то,<br /> что ты есть!</h2>
