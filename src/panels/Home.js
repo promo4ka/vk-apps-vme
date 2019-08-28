@@ -12,13 +12,13 @@ const Home = ({ id, go, fetchedUser, stories, viewstories }) => (
 		</Div>
 
 		<Div className="center">
-			<Button size="xl" level="commerce" onClick={go} size="l">Отправить дальше</Button>
+			<Button size="xl" level="commerce" className="mnext" onClick={go} size="l">Отправить дальше</Button>
 		</Div>
 
 		{viewstories && 
 		<Div className="mfooter center">
-			<Div className="stories-text">Вы можете поддержать идею, опубликовав историю.</Div>
 			<Button level="secondary" onClick={stories} size="l">Поддержать историей</Button>
+			<Div className="stories-text">Вы можете поддержать идею, опубликовав историю.</Div>
 		</Div>}
 	</Panel>
 );

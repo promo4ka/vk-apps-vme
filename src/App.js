@@ -60,7 +60,7 @@ class App extends React.Component {
 				connect.send("VKWebAppCallAPIMethod", {
                     "method": "stories.getPhotoUploadServer",
                     "params": {
-                        link_text: "open", link_url: "https://vk.com/app7112983", add_to_news: 1,
+                        link_text: "open", link_url: "https://vk.com/heyclickme", add_to_news: 1,
                         v: "5.92", "access_token": e.detail.data.access_token
                     }
                 });
@@ -81,7 +81,7 @@ class App extends React.Component {
     }
 
 	go = () => {
-		connect.send("VKWebAppShare", {"link": "https://vk.com/app7112983"});
+		connect.send("VKWebAppShare", {"link": "https://vk.com/heyclickme"});
 	};
 
 	render() {
