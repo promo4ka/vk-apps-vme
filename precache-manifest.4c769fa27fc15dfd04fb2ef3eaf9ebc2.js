@@ -4,23 +4,23 @@ self.__precacheManifest = [
     "url": "/heyclickme/static/js/runtime~main.ea01d390.js"
   },
   {
-    "revision": "e7fbea26ed05b33744d6",
-    "url": "/heyclickme/static/js/main.08038be6.chunk.js"
+    "revision": "d6cbad7c836d99e5d653",
+    "url": "/heyclickme/static/js/main.a537e3d6.chunk.js"
   },
   {
-    "revision": "524061b61a39d9311cb9",
-    "url": "/heyclickme/static/js/2.d31c98c9.chunk.js"
+    "revision": "8ad8521716992a5ff8fd",
+    "url": "/heyclickme/static/js/2.9d2d55fb.chunk.js"
   },
   {
-    "revision": "e7fbea26ed05b33744d6",
+    "revision": "d6cbad7c836d99e5d653",
     "url": "/heyclickme/static/css/main.bbe2038f.chunk.css"
   },
   {
-    "revision": "524061b61a39d9311cb9",
+    "revision": "8ad8521716992a5ff8fd",
     "url": "/heyclickme/static/css/2.2a011aab.chunk.css"
   },
   {
-    "revision": "f8a7a98f1f82735558be26c9b6b0c186",
+    "revision": "ddc0a1e305bba1e7e0eaadd4950f7a3b",
     "url": "/heyclickme/index.html"
   }
 ];
