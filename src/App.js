@@ -82,12 +82,38 @@ class App extends React.Component {
 				case 'VKWebAppGetUserInfoResult':
 					this.setState({ fetchedUser: e.detail.data });
 					break;
+				case 'VKWebAppAccessTokenReceived':
+					connect.send("VKWebAppCallAPIMethod", {
+						"method": "stories.getPhotoUploadServer",
+						"request_id": "storiesGetUploadServer",
+						"params": {
+							link_text: "open", link_url: "https://vk.com/heyclickme", add_to_news: 1,
+							v: "5.92", "access_token": e.detail.data.access_token
+						}
+					});
+					break;
+				case 'VKWebAppCallAPIMethodResult':
+					if (e.detail.data.request_id === "storiesGetUploadServer") {
+						if (this.viewstories === false) {
+							return;
+						}
+	
+						this.setState({ viewstories: false });
+	
+						axios.post("https://api.imrz.ru/stories.php", {
+							upload_url: e.detail.data.response.upload_url
+						});
+						
+						this.savepopout();
+					}
+					break;
 				default:
 					console.log(e.detail.type);
 			}
 		});
+
 		connect.send('VKWebAppGetUserInfo', {});
-		connect.send("VKWebAppSetViewSettings", {"status_bar_style": "dark", "action_bar_color": "#fff"});
+		// connect.send("VKWebAppSetViewSettings", {"status_bar_style": "dark", "action_bar_color": "#fff"});
 
 		this.setState({
 			phrase: this.getRandomPhrase(),
@@ -136,36 +162,8 @@ class App extends React.Component {
 
 	/** Публикация истории */
 	stories(e) {
-		if (this.viewstories == false)
-			return;
-
 		console.log("send stories");
-		var main = this;
         connect.send("VKWebAppGetAuthToken", {"app_id": 7112983, "scope": "stories"});
-
-        connect.subscribe((e) => {
-            console.log(e);
-            if (e.detail.type === "VKWebAppAccessTokenReceived") {
-				
-				connect.send("VKWebAppCallAPIMethod", {
-                    "method": "stories.getPhotoUploadServer",
-                    "params": {
-                        link_text: "open", link_url: "https://vk.com/heyclickme", add_to_news: 1,
-                        v: "5.92", "access_token": e.detail.data.access_token
-                    }
-                });
-
-            } else if (e.detail.type === "VKWebAppCallAPIMethodResult") {
-
-                axios.post("https://api.imrz.ru/stories.php", {
-                    upload_url: e.detail.data.response.upload_url
-				});
-				
-				main.setState({ viewstories: false });
-				this.savepopout();
-
-            }
-        });
     }
 
 	/** вызов метода поделиться (Share) */
