@@ -1,52 +1,87 @@
-.wrapper {
+*, *:before, *:after {
+    user-select: none;
+}
+
+.m__panel .Panel__in {
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+    transition: background-image .2s;
+}
+.m__panel {
     text-align: center;
     color: #fff;
-    max-width: 300px;
-    width: 100%;
-    margin: 0 auto;
-    margin-top: -50px;
 }
-.center {
-    text-align: center;
+
+.m__h1 {
+    font-size: 2.3em;
+    margin: 0;
+    line-height: 1.5;
 }
-.heart {
-    animation: heartbeat 2s infinite ease-in-out;
-    font-size: 100px;
-    line-height: 1px;
-    color: red;
+.m__h2 {
+    font-size: 1.5em;
+    line-height: 1.1;
+    padding: 0 20%;
+    margin: 0;
+    filter: drop-shadow(0 0 20px rgb(0, 0, 0, .5));
 }
-.mnext {
-    position: relative;
-    top: -50px;
+
+.m__stiker img {
+    margin: 20px 0 0 0;
+    max-width: 240px;
+    width: 60%;
 }
-.mh1 {
-    position: relative;
-    top: 50px;
-    color: #333;
-    font-size: 36px;
-    line-height: 30px;
+
+.m__button {
+    background-color: rgb(1, 110, 213);
+    display: inline-block;
+    padding: 20px 40px;
+    border-radius: 30px;
+    box-shadow: 0 0 40px rgb(1, 110, 213, .6);
+    cursor: pointer;
 }
-.mh2 {
-    position: relative;
-    top: 30px;
-    color: #333;
+.m__button:active {
+    background-color: rgb(61, 137, 207);
 }
-.stories-text {
-    font-size: 10px;
-    color: #757575;
-}
-.mfooter {
+
+.m__footer__button {
     position: fixed;
     bottom: 30px;
+    left: 0;
     width: 100%;
-    left: -12px;
+    font-size: .9em;
+    filter: drop-shadow(1px 1px 2px rgb(1, 110, 213, .8));
+    cursor: pointer;
 }
+
+@media screen and (max-height: 500px) {
+    .m__panel .Panel__in {
+        padding-top: 30px !important;
+    }
+    .m__h1 {
+        font-size: 1.8em;
+    }
+    .m__h2 {
+        font-size: 1.2em;
+    }
+    .m__stiker img {
+        max-width: 150px;
+        margin-top: 10px;
+        margin-bottom: -10px;
+    }
+    .m__button {
+        padding: 15px 30px;
+    }
+}
+
 .PanelHeader--ios .PanelHeader-bg::after {
     display: none;
 }
 .PanelHeader--android .PanelHeader-bg {
     display: none;
 }
+
 @keyframes rotate {
     from {transform: rotate3d(0, 1, 0, 0deg);}
     to {transform: rotate3d(0, 1, 0, 360deg);}
