@@ -168,7 +168,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<>
-				<YMInitializer accounts={[this.state.yandexMetrikaId]} />
+				<YMInitializer accounts={[this.yandexMetrikaId]} />
 				<View popout={this.state.popout} activePanel={this.state.activePanel}>
 					<Home
 						id="home" 
