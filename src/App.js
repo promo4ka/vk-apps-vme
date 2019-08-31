@@ -20,6 +20,7 @@ class App extends React.Component {
 			fetchedUser: null,
 			viewstories: true,
 			activeModal: null,
+			disabled: false,
 			popout: null,
 
 			phrase: 'Спасибо за то, что ты есть!',
@@ -98,16 +99,17 @@ class App extends React.Component {
 					break;
 				case 'VKWebAppCallAPIMethodResult':
 					if (e.detail.data.request_id === "storiesGetUploadServer") {
-						if (this.viewstories === false) {
+						if (this.viewstories === false && this.disabled) {
 							return;
 						}
 
 						uploadStory(e.detail.data.response.upload_url)
 							.then((res) => {
-								this.setState({ viewstories: false });
+								this.setState({ viewstories: false, disabled: false });
 								this.savepopout();
 								ym('hit', `/published/story/${this.state.fetchedUser.id}`);
 							}).catch((res) => {
+								this.setState({ disabled: false });
 								this.errorpopout();
 							})
 					}
@@ -162,9 +164,11 @@ class App extends React.Component {
 		this.setState({ activeModal });
 	}
 
-	stories(e) {
-		console.info("send stories");
-        connect.send("VKWebAppGetAuthToken", {"app_id": 7112983, "scope": "stories"});
+	stories = () => {
+        if (this.state.disabled === false) {
+			this.setState({ disabled: true });
+			connect.send("VKWebAppGetAuthToken", {"app_id": 7112983, "scope": "stories"});
+		}
     }
 
 	share = () => {
@@ -174,6 +178,25 @@ class App extends React.Component {
 	};
 
 	render() {
+		const actions = [{
+			title: 'Понятно',
+			type: 'primary',
+			action: () => {
+				this.setActiveModal(null);
+			}
+		}];
+		
+		if (this.state.viewstories) {
+			actions.push({
+				title: 'Поддержать историей',
+				type: this.state.viewstories ? 'primary' : 'secondary',
+				action: () => {
+					this.setActiveModal(null);
+					this.stories();
+				}
+			});
+		}
+
 		const modal = (
 			<ModalRoot activeModal={this.state.activeModal}>
 				<ModalCard
@@ -183,20 +206,7 @@ class App extends React.Component {
 					title="Если тебе прислали ссылку на сервис, значит ты важен этому человеку."
 					caption="Вместо тысячи слов - отправь ссылку тому, кто тебе небезразличен."
 					actionsLayout="vertical"
-					actions={[{
-						title: 'Понятно',
-						type: 'primary',
-						action: () => {
-							this.setActiveModal(null);
-						}
-					},{
-						title: 'Поддержать историей',
-						type: 'primary',
-						action: () => {
-							this.setActiveModal(null);
-							this.stories();
-						}
-					}]}
+					actions={ actions }
 				></ModalCard>
 			</ModalRoot>
 		);
