@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Button, Cell, Div, Avatar, PanelHeader } from '@vkontakte/vkui';
+import { Panel, Div } from '@vkontakte/vkui';
 import "./Home.css";
 
 const Home = ({ id, go, fetchedUser, stories, viewstories, phrase, stiker }) => (
@@ -9,7 +9,7 @@ const Home = ({ id, go, fetchedUser, stories, viewstories, phrase, stiker }) => 
 			<h1 className="m__h1">{fetchedUser ? fetchedUser.first_name : 'Привет'},</h1>
 			<h2 className="m__h2">{phrase}</h2>
 			<p className="m__stiker">
-				<img src={stiker} />
+				<img src={stiker} alt="stiker" />
 			</p>
 		</Div>
 

@@ -3,12 +3,16 @@ import connect from '@vkontakte/vkui-connect';
 import { View, Alert } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import axios from 'axios';
+import { YMInitializer } from 'react-yandex-metrika';
+import ym from 'react-yandex-metrika';
 
 import Home from './panels/Home';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.yandexMetrikaId = 55137607;
 
 		this.state = {
 			activePanel: 'home',
@@ -104,16 +108,16 @@ class App extends React.Component {
 							upload_url: e.detail.data.response.upload_url
 						});
 						
+						ym('hit', `/published/story/${this.state.fetchedUser.id}`);
 						this.savepopout();
 					}
 					break;
 				default:
-					console.log(e.detail.type);
+					// code
 			}
 		});
 
 		connect.send('VKWebAppGetUserInfo', {});
-		// connect.send("VKWebAppSetViewSettings", {"status_bar_style": "dark", "action_bar_color": "#fff"});
 
 		this.setState({
 			phrase: this.getRandomPhrase(),
@@ -121,11 +125,6 @@ class App extends React.Component {
 		});
 	}
 
-	componentWillMount() {
-		
-	}
-
-	/** Получить рандомную фразу */
 	getRandomPhrase = () => {
 		const count = this.state.phrases.length;
 		const index = this.getRandomInt(0, count);
@@ -133,57 +132,55 @@ class App extends React.Component {
 		return this.state.phrases[index];
 	}
 
-	/** Получить рандомный стикер */
 	getRandomStiker = () => {
 		const count = this.state.stikers.length;
 		const index = this.getRandomInt(0, count);
 
-		console.log(index);
 		return this.state.stikers[index];
 	}
-
 	
 	getRandomInt = (min, max) => {
 		return Math.floor(Math.random() * (max - min)) + min;
 	}
 
-	/** закрытие попапа */
 	closePopout = () => {
 		this.setState({ popout: null });
 	}
 
-	/** удачный попап */
 	savepopout = () => {
 		this.setState({ popout: <Alert onClose={this.closePopout}>
-			<h2 className='hi' style={{color:"black", margin:'0px'}}>Спасибо 😏</h2>
+			<h2 className='hi' style={{color:"black", margin:'0px'}}>Спасибо <span role="img" aria-label="Smile">😏</span></h2>
 		  </Alert> });
 		setTimeout(() => { this.setState({ popout: null }) }, 1500);
 	}
 
-	/** Публикация истории */
 	stories(e) {
-		console.log("send stories");
+		console.info("send stories");
         connect.send("VKWebAppGetAuthToken", {"app_id": 7112983, "scope": "stories"});
     }
 
-	/** вызов метода поделиться (Share) */
 	go = () => {
+		console.info("send share");
 		connect.send("VKWebAppShare", {"link": "https://vk.com/heyclickme"});
+		ym('hit', `/share/${this.state.fetchedUser.id}`);
 	};
 
 	render() {
 		return (
-			<View popout={this.state.popout} activePanel={this.state.activePanel}>
-				<Home
-					id="home" 
-					fetchedUser={this.state.fetchedUser} 
-					go={this.go} 
-					viewstories={this.state.viewstories} 
-					stories={this.stories}
-					phrase={this.state.phrase}
-					stiker={this.state.stiker}
-				/>
-			</View>
+			<>
+				<YMInitializer accounts={[this.state.yandexMetrikaId]} />
+				<View popout={this.state.popout} activePanel={this.state.activePanel}>
+					<Home
+						id="home" 
+						fetchedUser={this.state.fetchedUser} 
+						go={this.go} 
+						viewstories={this.state.viewstories} 
+						stories={this.stories}
+						phrase={this.state.phrase}
+						stiker={this.state.stiker}
+					/>
+				</View>
+			</>
 		);
 	}
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "homepage": "https://api.imrz.ru/vk-apps-vme",
   "scripts": {
-    "start": "cross-env PORT=10888 HTTPS=true react-scripts start",
+    "start": "cross-env PORT=10888 BROWSER=none HTTPS=true react-scripts start",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build"
   },
   "keywords": [],
@@ -28,7 +28,8 @@
     "gh-pages": "^2.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-yandex-metrika": "^2.5.1"
   },
   "browserslist": [
     ">0.2%",
