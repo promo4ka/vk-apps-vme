@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, Div } from '@vkontakte/vkui';
 import "./Home.css";
 
-const Home = ({ id, go, fetchedUser, stories, viewstories, phrase, stiker }) => (
+const Home = ({ id, share, fetchedUser, stories, viewstories, phrase, stiker }) => (
 	<Panel id={id} className="m__panel">
 		<Div className="m__wrapper">
 			<h1 className="m__h1">{fetchedUser ? fetchedUser.first_name : 'Привет'},</h1>
@@ -14,7 +14,7 @@ const Home = ({ id, go, fetchedUser, stories, viewstories, phrase, stiker }) => 
 		</Div>
 
 		<Div>
-			<div className="m__button" onClick={go}>Отправить дальше</div>
+			<div className="m__button" onClick={share}>Отправить дальше</div>
 		</Div>
 
 		{viewstories && 
@@ -27,7 +27,7 @@ const Home = ({ id, go, fetchedUser, stories, viewstories, phrase, stiker }) => 
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
-	go: PropTypes.func.isRequired,
+	share: PropTypes.func.isRequired,
 	viewstories: PropTypes.bool.isRequired,
 	stories: PropTypes.func.isRequired,
 	phrase: PropTypes.string.isRequired,

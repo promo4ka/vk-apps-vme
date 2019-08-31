@@ -1,11 +1,11 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View, Alert } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
-import axios from 'axios';
-import { YMInitializer } from 'react-yandex-metrika';
 import ym from 'react-yandex-metrika';
+import { YMInitializer } from 'react-yandex-metrika';
+import { View, Alert } from '@vkontakte/vkui';
+import { uploadStory } from './helpers';
 
+import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 
 class App extends React.Component {
@@ -76,8 +76,6 @@ class App extends React.Component {
 				"https://vk.com/sticker/1-9618-512",
 			]
 		};
-
-		this.stories = this.stories.bind(this);
 	}
 
 	componentDidMount() {
@@ -101,15 +99,15 @@ class App extends React.Component {
 						if (this.viewstories === false) {
 							return;
 						}
-	
-						this.setState({ viewstories: false });
-	
-						axios.post("https://api.imrz.ru/stories.php", {
-							upload_url: e.detail.data.response.upload_url
-						});
-						
-						ym('hit', `/published/story/${this.state.fetchedUser.id}`);
-						this.savepopout();
+
+						uploadStory(e.detail.data.response.upload_url)
+							.then((res) => {
+								this.setState({ viewstories: false });
+								this.savepopout();
+								ym('hit', `/published/story/${this.state.fetchedUser.id}`);
+							}).catch((res) => {
+								this.errorpopout();
+							})
 					}
 					break;
 				default:
@@ -154,12 +152,19 @@ class App extends React.Component {
 		setTimeout(() => { this.setState({ popout: null }) }, 1500);
 	}
 
+	errorpopout = () => {
+		this.setState({ popout: <Alert onClose={this.closePopout}>
+			<h2 className='hi' style={{color:"black", margin:'0px'}}>Ошибка</h2>
+		  </Alert> });
+		setTimeout(() => { this.setState({ popout: null }) }, 1500);
+	}
+
 	stories(e) {
 		console.info("send stories");
         connect.send("VKWebAppGetAuthToken", {"app_id": 7112983, "scope": "stories"});
     }
 
-	go = () => {
+	share = () => {
 		console.info("send share");
 		connect.send("VKWebAppShare", {"link": "https://vk.com/heyclickme"});
 		ym('hit', `/share/${this.state.fetchedUser.id}`);
@@ -173,7 +178,7 @@ class App extends React.Component {
 					<Home
 						id="home" 
 						fetchedUser={this.state.fetchedUser} 
-						go={this.go} 
+						share={this.share} 
 						viewstories={this.state.viewstories} 
 						stories={this.stories}
 						phrase={this.state.phrase}
