@@ -7,3 +7,7 @@ export const uploadStory = async (uploadUrl) => {
         upload_url: uploadUrl
     })
 }
+
+export const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+}

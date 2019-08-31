@@ -55,6 +55,11 @@
     cursor: pointer;
 }
 
+.Icon--like_36 {
+    color: rgb(255, 0, 4);
+    animation: heartbeat 2.5s infinite;
+}
+
 @media screen and (max-height: 500px) {
     .m__panel .Panel__in {
         padding-top: 30px !important;
@@ -80,6 +85,12 @@
 }
 .PanelHeader--android .PanelHeader-bg {
     display: none;
+}
+.PanelHeader-content--brand, .PanelHeader-bg--brand {
+    background: transparent !important;
+}
+.PanelHeader-left-in--brand, .PanelHeader-addon--brand, .PanelHeader-right--brand {
+    background: transparent !important;
 }
 
 @keyframes rotate {

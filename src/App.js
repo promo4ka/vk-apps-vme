@@ -2,8 +2,9 @@ import React from 'react';
 import connect from '@vkontakte/vkui-connect';
 import ym from 'react-yandex-metrika';
 import { YMInitializer } from 'react-yandex-metrika';
-import { View, Alert } from '@vkontakte/vkui';
-import { uploadStory } from './helpers';
+import { View, Alert, ModalRoot, ModalCard } from '@vkontakte/vkui';
+import { uploadStory, getRandomInt } from './helpers';
+import Icon36Like from '@vkontakte/icons/dist/36/like';
 
 import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
@@ -18,6 +19,7 @@ class App extends React.Component {
 			activePanel: 'home',
 			fetchedUser: null,
 			viewstories: true,
+			activeModal: null,
 			popout: null,
 
 			phrase: 'Спасибо за то, что ты есть!',
@@ -125,20 +127,16 @@ class App extends React.Component {
 
 	getRandomPhrase = () => {
 		const count = this.state.phrases.length;
-		const index = this.getRandomInt(0, count);
+		const index = getRandomInt(0, count);
 
-		return this.state.phrases[index];
+		return this.state.phrases[index || 0];
 	}
 
 	getRandomStiker = () => {
 		const count = this.state.stikers.length;
-		const index = this.getRandomInt(0, count);
+		const index = getRandomInt(0, count);
 
-		return this.state.stikers[index];
-	}
-	
-	getRandomInt = (min, max) => {
-		return Math.floor(Math.random() * (max - min)) + min;
+		return this.state.stikers[index || 0];
 	}
 
 	closePopout = () => {
@@ -147,7 +145,8 @@ class App extends React.Component {
 
 	savepopout = () => {
 		this.setState({ popout: <Alert onClose={this.closePopout}>
-			<h2 className='hi' style={{color:"black", margin:'0px'}}>Спасибо <span role="img" aria-label="Smile">😏</span></h2>
+			<h2 className='hi' style={{color:"black", margin:'0px'}}>
+				Спасибо <span role="img" aria-label="Smile">😏</span></h2>
 		  </Alert> });
 		setTimeout(() => { this.setState({ popout: null }) }, 1500);
 	}
@@ -157,6 +156,10 @@ class App extends React.Component {
 			<h2 className='hi' style={{color:"black", margin:'0px'}}>Ошибка</h2>
 		  </Alert> });
 		setTimeout(() => { this.setState({ popout: null }) }, 1500);
+	}
+
+	setActiveModal = (activeModal) => {
+		this.setState({ activeModal });
 	}
 
 	stories(e) {
@@ -171,10 +174,37 @@ class App extends React.Component {
 	};
 
 	render() {
+		const modal = (
+			<ModalRoot activeModal={this.state.activeModal}>
+				<ModalCard
+					id="user-info"
+					onClose={() => this.setActiveModal(null)}
+					icon={<Icon36Like />}
+					title="Если тебе прислали ссылку на сервис, значит ты важен этому человеку."
+					caption="Вместо тысячи слов - отправь ссылку тому, кто тебе небезразличен."
+					actionsLayout="vertical"
+					actions={[{
+						title: 'Понятно',
+						type: 'primary',
+						action: () => {
+							this.setActiveModal(null);
+						}
+					},{
+						title: 'Поддержать историей',
+						type: 'primary',
+						action: () => {
+							this.setActiveModal(null);
+							this.stories();
+						}
+					}]}
+				></ModalCard>
+			</ModalRoot>
+		);
+
 		return (
 			<>
 				<YMInitializer accounts={[this.yandexMetrikaId]} />
-				<View popout={this.state.popout} activePanel={this.state.activePanel}>
+				<View popout={this.state.popout} activePanel={this.state.activePanel} modal={modal}>
 					<Home
 						id="home" 
 						fetchedUser={this.state.fetchedUser} 
@@ -183,6 +213,7 @@ class App extends React.Component {
 						stories={this.stories}
 						phrase={this.state.phrase}
 						stiker={this.state.stiker}
+						setActiveModal={ this.setActiveModal }
 					/>
 				</View>
 			</>
