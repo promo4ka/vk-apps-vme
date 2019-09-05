@@ -6,6 +6,12 @@ import { View, Alert, ModalRoot, ModalCard } from '@vkontakte/vkui';
 import { uploadStory, getRandomInt } from './helpers';
 import Icon36Like from '@vkontakte/icons/dist/36/like';
 
+import Stiker1 from './img/1.png';
+import Stiker2 from './img/2.png';
+import Stiker3 from './img/3.png';
+import Stiker4 from './img/4.png';
+import Stiker5 from './img/5.png';
+
 import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 
@@ -45,38 +51,11 @@ class App extends React.Component {
 			],
 
 			stikers: [
-				"https://vk.com/sticker/1-14210-512",
-				"https://vk.com/sticker/1-14523-512",
-				"https://vk.com/sticker/1-14217-512",
-				"https://vk.com/sticker/1-12507-512",
-				"https://vk.com/sticker/1-8754-512",
-				"https://vk.com/sticker/1-4276-512",
-				"https://vk.com/sticker/1-7156-512",
-				"https://vk.com/sticker/1-13203-512",
-				"https://vk.com/sticker/1-11650-512",
-				"https://vk.com/sticker/1-14087-512",
-				"https://vk.com/sticker/1-4073-512",
-				"https://vk.com/sticker/1-9709-512",
-				"https://vk.com/sticker/1-9710-512",
-				"https://vk.com/sticker/1-11290-512",
-				"https://vk.com/sticker/1-11288-512",
-				"https://vk.com/sticker/1-11240-512",
-				"https://vk.com/sticker/1-12301-512",
-				"https://vk.com/sticker/1-14304-512",
-				"https://vk.com/sticker/1-10881-512",
-				"https://vk.com/sticker/1-13202-512",
-				"https://vk.com/sticker/1-11254-512",
-				"https://vk.com/sticker/1-13859-512",
-				"https://vk.com/sticker/1-11616-512",
-				"https://vk.com/sticker/1-4390-512",
-				"https://vk.com/sticker/1-13198-512",
-				"https://vk.com/sticker/1-13204-512",
-				"https://vk.com/sticker/1-12298-512",
-				"https://vk.com/sticker/1-12303-512",
-				"https://vk.com/sticker/1-8753-512",
-				"https://vk.com/sticker/1-9602-512",
-				"https://vk.com/sticker/1-9607-512",
-				"https://vk.com/sticker/1-9618-512",
+				Stiker1,
+				Stiker2,
+				Stiker3,
+				Stiker4,
+				Stiker5
 			]
 		};
 	}
